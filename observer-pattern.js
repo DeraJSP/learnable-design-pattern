@@ -2,6 +2,7 @@ class telephone {
 	constructor() {
 		this.observers = [];
 		this.contacts = [];
+		this.dialedNumber = 10000;
 	}
 
 	addObserver(observer) {
@@ -23,8 +24,7 @@ class telephone {
 	dialPhoneNumber(number) {
 		for (let i = 0; i < this.contacts.length; i++) {
 			if (number == this.contacts[i]) {
-				console.log(`${this.contacts[i]}`);
-				console.log('Now Dialling 2347023232');
+				this.dialedNumber = number;
 				this.notifyObservers();
 			}
 		}
@@ -32,7 +32,7 @@ class telephone {
 
 	notifyObservers() {
 		this.observers.forEach(observer => {
-			observer.update(this.contacts)
+			observer.update(this.dialedNumber)
 		})
 	}
 } 
@@ -42,16 +42,18 @@ class myObservers {
 		this.name = name;
 	}
 
-	update(contacts) {
-		console.log(`${this.name} Display: ${contacts.at(-1)} added to phonebook`)
+	update(number) {
+		console.log(this.dialedNumber);
 	}
 }
 
-const telephone1 = new telephone();
-const displayDevice1 = new myObservers("Display 1");
-telephone1.addObserver(displayDevice1);
-telephone1.addPhoneNumber(123);
-telephone1.addPhoneNumber(456);
-telephone1.addPhoneNumber(789);
-telephone1.dialPhoneNumber(45);
-
+const android = new telephone();
+const displayDevice1 = new myObservers("First observer");
+const displayDevice2 = new myObservers("Second observer");
+android.addObserver(displayDevice1);
+android.addObserver(displayDevice2);
+android.addPhoneNumber(123);
+android.addPhoneNumber(456);
+android.addPhoneNumber(789);
+android.dialPhoneNumber(456);
+android.dialPhoneNumber(789);
