@@ -13,6 +13,17 @@ class telephone {
 		this.observers = this.observers.filter(obs => obs !== observer);
 	}
 
+	notifyObservers() {
+		const observer1 = this.observers[0];
+    	if (observer1) {
+      		observer1.update(this.dialedNumber);
+   		}
+	    const observer2 = this.observers[1];
+	    	if (observer2) {
+	      		observer2.update(`Now dialling ${this.dialedNumber}`);
+		}
+  	}
+
 	addPhoneNumber(number) {
 		this.contacts.push(number);
 	}
@@ -21,22 +32,15 @@ class telephone {
 		this.contacts = this.contacts.filter(num => num !== number);
 	}
 
-	dialPhoneNumber(dialedNum) {
-		for (let i = 0; i < this.contacts.length; i++) {
-			if (dialedNum == this.contacts[i]) {
-				this.dialedNumber = this.contacts[i];
-				this.notiyObservers();
-			} else {
-				this.dialedNumber = 'Number not found';
-				this.notifyObservers();
-			}
-		}
-	}
+	dialPhoneNumber(number) {
+		const contact = this.contacts.find((contact) => contact == number);
 
-	notifObservers() {
-		this.observers.forEach(observer => {
-			observer.update()
-		})
+		  if (contact) {
+		      this.dialedNumber = contact;
+		      this.notifyObservers();
+		      } else {
+		    	console.log('Phone number not found!');
+		  }
 	}
 } 
 
@@ -45,8 +49,8 @@ class myObservers {
 		this.name = name;
 	}
 
-	update(dialedNum) {
-		console.log(`${this.name}: ${android.dialedNumber}`);
+	update(number) {
+		console.log(`${this.name}: ${number}`);
 	}
 }
 
@@ -58,4 +62,4 @@ android.addObserver(displayDevice2);
 android.addPhoneNumber(80123);
 android.addPhoneNumber(80456);
 android.addPhoneNumber(80789);
-android.dialPhoneNumber(8012);
+android.dialPhoneNumber(80123);
