@@ -2,7 +2,7 @@ class telephone {
 	constructor() {
 		this.observers = [];
 		this.contacts = [];
-		this.dialedNumber = 10000;
+		this.dialedNumber;
 	}
 
 	addObserver(observer) {
@@ -21,18 +21,21 @@ class telephone {
 		this.contacts = this.contacts.filter(num => num !== number);
 	}
 
-	dialPhoneNumber(number) {
+	dialPhoneNumber(dialedNum) {
 		for (let i = 0; i < this.contacts.length; i++) {
-			if (number == this.contacts[i]) {
-				this.dialedNumber = number;
+			if (dialedNum == this.contacts[i]) {
+				this.dialedNumber = this.contacts[i];
+				this.notiyObservers();
+			} else {
+				this.dialedNumber = 'Number not found';
 				this.notifyObservers();
 			}
 		}
 	}
 
-	notifyObservers() {
+	notifObservers() {
 		this.observers.forEach(observer => {
-			observer.update(this.dialedNumber)
+			observer.update()
 		})
 	}
 } 
@@ -42,8 +45,8 @@ class myObservers {
 		this.name = name;
 	}
 
-	update(number) {
-		console.log(this.dialedNumber);
+	update(dialedNum) {
+		console.log(`${this.name}: ${android.dialedNumber}`);
 	}
 }
 
@@ -52,8 +55,7 @@ const displayDevice1 = new myObservers("First observer");
 const displayDevice2 = new myObservers("Second observer");
 android.addObserver(displayDevice1);
 android.addObserver(displayDevice2);
-android.addPhoneNumber(123);
-android.addPhoneNumber(456);
-android.addPhoneNumber(789);
-android.dialPhoneNumber(456);
-android.dialPhoneNumber(789);
+android.addPhoneNumber(80123);
+android.addPhoneNumber(80456);
+android.addPhoneNumber(80789);
+android.dialPhoneNumber(8012);
