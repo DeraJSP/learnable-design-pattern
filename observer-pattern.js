@@ -5,7 +5,7 @@ class telephone {
 		this.observers = [];
 		// empty array to hold contacts stored
 		this.contacts = [];
-		// number dialed
+		// hold the number dialed
 		this.dialedNumber;
 	}
 
